@@ -5,7 +5,7 @@ from tkinter import ttk
 
 
 class Timer(ttk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, show_settings):
         super().__init__(parent)
         
         self.controller = controller
@@ -21,8 +21,16 @@ class Timer(ttk.Frame):
         )
         timer_description.grid(row=0,column=0,sticky='W',padx=(10,0),pady=(10,0))
         
+        settings_button = ttk.Button(
+            self,
+            text="Settings",
+            command=show_settings,
+            cursor="hand2"
+        )
+        settings_button.grid(row=0,column=1, sticky="E" , padx=10, pady =(10,0))
+        
         timer_frame = ttk.Frame(self,height="100")#Timer Frame within container
-        timer_frame.grid(row=1,column=0,pady=(10,0) , sticky="NSEW")
+        timer_frame.grid(row=1,column=0, columnspan=2,pady=(10,0) , sticky="NSEW")
         timer_counter = ttk.Label(
             timer_frame,
             textvariable=self.current_time
@@ -30,7 +38,7 @@ class Timer(ttk.Frame):
         timer_counter.place(relx=0.5,rely=0.5, anchor="center")
         
         button_container = ttk.Frame(self,padding=10)
-        button_container.grid(row=2,column=0,sticky="EW")
+        button_container.grid(row=2,column=0,columnspan=2,sticky="EW")
         button_container.columnconfigure((0,1,2), weight=1)
         
         self.start_button = ttk.Button(
