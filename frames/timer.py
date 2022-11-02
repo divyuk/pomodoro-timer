@@ -8,6 +8,8 @@ class Timer(ttk.Frame):
     def __init__(self, parent, controller, show_settings):
         super().__init__(parent)
         
+        self["style"] = "Background.TFrame"
+        
         self.controller = controller
         pomodoro_time = int(controller.pomodoro.get())
         self.current_time = tk.StringVar(value=f"{pomodoro_time:02d}:00")
@@ -17,7 +19,8 @@ class Timer(ttk.Frame):
         
         timer_description = ttk.Label(
             self,
-            textvariable=self.current_timer_label
+            textvariable=self.current_timer_label,
+            style="LightText.TLabel"
         )
         timer_description.grid(row=0,column=0,sticky='W',padx=(10,0),pady=(10,0))
         
@@ -25,19 +28,21 @@ class Timer(ttk.Frame):
             self,
             text="Settings",
             command=show_settings,
+            style="PomodoroButton.TButton",
             cursor="hand2"
         )
         settings_button.grid(row=0,column=1, sticky="E" , padx=10, pady =(10,0))
         
-        timer_frame = ttk.Frame(self,height="100")#Timer Frame within container
+        timer_frame = ttk.Frame(self,height="100", style="Timer.TFrame" )#Timer Frame within container
         timer_frame.grid(row=1,column=0, columnspan=2,pady=(10,0) , sticky="NSEW")
         timer_counter = ttk.Label(
             timer_frame,
-            textvariable=self.current_time
+            textvariable=self.current_time,
+            style="TimerText.TLabel"
         )
         timer_counter.place(relx=0.5,rely=0.5, anchor="center")
         
-        button_container = ttk.Frame(self,padding=10)
+        button_container = ttk.Frame(self,padding=10, style="Background.TFrame")
         button_container.grid(row=2,column=0,columnspan=2,sticky="EW")
         button_container.columnconfigure((0,1,2), weight=1)
         
@@ -45,6 +50,7 @@ class Timer(ttk.Frame):
             button_container,
             text="Start",
             command=self.start_timer,
+            style="PomodoroButton.TButton",
             cursor="hand2"
         )
         self.stop_button = ttk.Button(
@@ -52,6 +58,7 @@ class Timer(ttk.Frame):
             text="Stop",
             state="disabled",
             command=self.stop_timer,
+            style="PomodoroButton.TButton",
             cursor="hand2"
         )
         reset_button = ttk.Button(
